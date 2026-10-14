@@ -5,8 +5,8 @@ from supabase import create_client, Client
 
 st.set_page_config(page_title="Gestão Financeira Pessoal", page_icon="💰", layout="wide")
 
-SUPABASE_URL = "https://zisxtwbqapabezwtnfrt.supabase.co"
-SUPABASE_KEY = "sb_publishable_aOoYKGobSRaLRK34BYnjAg_BAtTP7-c"
+SUPABASE_URL = st.secrets.get("SUPABASE_URL", "https://zisxtwbqapabezwtnfrt.supabase.co")
+SUPABASE_KEY = st.secrets.get("SUPABASE_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inppc3h0d2JxYXBhYmV6d3RuZnJ0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc5MTgwNzYzNCwiZXhwIjoyMDg3MzgzNjM0fQ.2dJzYXBhyMv6d3RuZnJ0iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsInNlb2I6MTc5MDYwMDk2MCwiZXhwIjoyMTA2Mzk2MzYwfq.9FSNJBU2TyvS1IZS6VBVNRhpJiVHxMIgtK72dbMY1I4")
 
 @st.cache_resource
 def init_supabase() -> Client:
@@ -19,7 +19,7 @@ st.title("📊 Gestão Financeira Pessoal")
 # Obter dados
 contas_res = supabase.from_("contas").select("*").execute()
 cartoes_res = supabase.from_("cartoes").select("*").execute()
-transacoes_res = supabase.from_("transacoes").select("*, contas(nome), cartoes(nome)").order("data_transacao", desc=True).execute()
+transacoes_res = supabase.from_("transacoes").select("*").order("data_transacao", desc=True).execute()
 
 df_contas = pd.DataFrame(contas_res.data) if contas_res.data else pd.DataFrame()
 df_cartoes = pd.DataFrame(cartoes_res.data) if cartoes_res.data else pd.DataFrame()

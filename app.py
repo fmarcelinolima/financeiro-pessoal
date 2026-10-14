@@ -5,8 +5,9 @@ from supabase import create_client, Client
 
 st.set_page_config(page_title="Gestão Financeira Pessoal", page_icon="💰", layout="wide")
 
-SUPABASE_URL = "https://zisxtwbqapabezwtnfrt.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inppc3h0d2JxYXBhYmV6d3RuZnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE4MDc2M3QsImV4cCI6MjA4NzM4MzYzNH0.Qldjmw-9v68u7jvyjp12LA4djOhnPI9CqtgQy9gbNvQ"
+# Ler diretamente dos Secrets do Streamlit
+SUPABASE_URL = st.secrets["SUPABASE_URL"]
+SUPABASE_KEY = st.secrets["SUPABASE_KEY"]
 
 @st.cache_resource
 def init_supabase() -> Client:
@@ -59,9 +60,7 @@ if not df_transacoes.empty:
     col_kpi1.metric("Total Lançado", f"R$ {total_despesas:,.2f}")
     col_kpi2.metric("Qtd. Transações", len(df_transacoes))
     
-    st.dataframe(
-        df_transacoes[['data_transacao', 'descricao', 'valor', 'categoria', 'forma_pagamento']],
-        use_container_width=True
-    )
+    colunas_exibir = [c for c in ['data_transacao', 'descricao', 'valor', 'categoria', 'forma_pagamento'] if c in df_transacoes.columns]
+    st.dataframe(df_transacoes[colunas_exibir], use_container_width=True)
 else:
     st.info("Ainda não existem transações registadas.")

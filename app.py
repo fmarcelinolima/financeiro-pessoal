@@ -8,7 +8,7 @@ st.set_page_config(page_title="Gestão Financeira Pessoal", page_icon="💰", la
 # Ler diretamente dos Secrets do Streamlit
 # Credenciais diretas com fallback
 SUPABASE_URL = "https://zisxtwbqapabezwtnfrt.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inppc3h0d2JxYXBhYmV6d3RuZnJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE4MDc2M3QsImV4cCI6MjA4NzM4MzYzNH0.Qldjmw-9v68u7jvyjp12LA4djOhnPI9CqtgQy9gbNvQ"
+SUPABASE_KEY = "sb_publishable_aOoYKGobSRaLRK34BYnjAg_BAtTP7-c"
 
 @st.cache_resource
 def init_supabase() -> Client:
